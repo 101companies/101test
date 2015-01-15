@@ -1,0 +1,80 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use Cwd            qw(abs_path);
+use File::Basename qw(dirname);
+use File::Path     qw(make_path remove_tree);
+use File::Slurp    qw(slurp);
+use Getopt::Long;
+use IPC::Run       qw();
+use Test::More;
+use YAML           qw(LoadFile);
+
+
+use constant OPTIONS => qw(definition cd results);
+
+my %options;
+GetOptions(\%options, map { "$_=s" } OPTIONS);
+
+for (OPTIONS)
+{
+    die "Missing required option: $_" if not defined $options{$_};
+    make_path($options{$_})           if not -e      $options{$_};
+    $options{$_} = abs_path $options{$_} or die "Invalid path: $_ ($!)";
+}
+
+$ENV{results101dir} = $options{results};
+
+
+my $test = LoadFile($options{definition});
+chdir "$options{cd}" or die "Couldn't cd into $options{cd}: $!";
+
+
+my %base = map { /^\d+$/ ? () : ($_ => $test->{$_}) } keys %$test;
+
+
+for my $number (1 .. $test->{tests})
+{
+    my %case = (%base, exists $test->{$number} ? %{$test->{$number}} : ());
+    $case{command} = [$case{command}] if not ref $case{command};
+    $ENV{repo101branch} = $case{branch} // "$case{name}$number";
+
+    my ($in, $out);
+    IPC::Run::run($case{command}, \$in, \$out);
+
+    my %diff = map { /^\s*([AMD])\s+(.+?)\s*$/ ? ($2 => $1) : () }
+                   split /\n/, $out;
+
+    if (exists $case{diff})
+    {
+        my %expected = map
+        {
+            my $path = m{^/} ? $_ : "$options{results}/$_";
+            ($path => $case{diff}{$_})
+        } keys %{$case{diff}};
+        is_deeply \%diff, \%expected, 'diff is correct';
+    }
+
+    if (exists $case{files})
+    {
+        while (my ($key, $value) = each %{$case{files}})
+        {
+            my $path = "$options{results}/$key";
+            my %data = (exists => 1, %$value);
+
+            if ($data{exists})
+            {   ok  -e $path, "file exists: $path" }
+            else
+            {   ok !-e $path, "file doesn't exist: $path" }
+
+            if (exists $data{content})
+            {
+                my $content = slurp $path;
+                is $content, $data{content}, "content of $path";
+            }
+        }
+    }
+}
+
+
+done_testing;

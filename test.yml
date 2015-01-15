@@ -1,0 +1,35 @@
+name    : test
+tests   : 3
+command : ['make', '-s', 'test-test.run']
+
+1 :
+  diff  :
+    101repo/test  : A
+  files :
+    101repo/test  :
+      exists  : 1
+      content : "This is a test file.\n"
+    101repo/test2 :
+      exists  : 0
+
+2 :
+  diff  :
+    101repo/test  : M
+    101repo/test2 : A
+  files :
+    101repo/test  :
+      exists  : 1
+      content : "This is a modified test file.\nAnother line.\n"
+    101repo/test2 :
+      exists  : 1
+      content : "Another test file.\n"
+
+3 :
+  diff  :
+    101repo/test2 : D
+  files :
+    101repo/test  :
+      exists  : 1
+      content : "This is a modified test file.\nAnother line.\n"
+    101repo/test2 :
+      exists  : 0
