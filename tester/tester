@@ -11,7 +11,7 @@ use Test::More;
 use YAML           qw(LoadFile);
 
 
-use constant OPTIONS => qw(definition cd results);
+use constant OPTIONS => qw(config cd results);
 
 my %options;
 GetOptions(\%options, map { "$_=s" } OPTIONS);
@@ -26,7 +26,7 @@ for (OPTIONS)
 $ENV{results101dir} = $options{results};
 
 
-my $test = LoadFile($options{definition});
+my $test = LoadFile($options{config});
 chdir "$options{cd}" or die "Couldn't cd into $options{cd}: $!";
 
 
