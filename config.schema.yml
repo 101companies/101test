@@ -18,20 +18,31 @@ properties :
     type     : array
     items    :
       type : string
+  branch  :
+    type     : string
 
 patternProperties :
   \d+ :
-    type       : object
-    properties :
+    type                 : object
+    additionalProperties : 0
+    properties           :
 
-      diff  :
+      command :
+        type  : array
+        items :
+          type : string
+
+      branch :
+        type : string
+
+      diff    :
         type              : object
         patternProperties :
           .* :
             type    : string
             pattern : ^[AMD]$
 
-      files :
+      files   :
         type              : object
         patternProperties :
           .* :
