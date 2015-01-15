@@ -1,0 +1,43 @@
+title    : Test Definition Schema
+type     : object
+required :
+  - name
+  - tests
+  - command
+
+properties :
+  name    :
+    required : 1
+    type     : string
+  tests   :
+    required : 1
+    type     : integer
+    minimum  : 1
+  command :
+    required : 1
+    type     : array
+    items    :
+      type : string
+
+patternProperties :
+  \d+ :
+    type       : object
+    properties :
+
+      diff  :
+        type              : object
+        patternProperties :
+          .* :
+            type    : string
+            pattern : ^[AMD]$
+
+      files :
+        type              : object
+        patternProperties :
+          .* :
+            type       : object
+            properties :
+              exists  :
+                type : {enum : [0, 1]}
+              content :
+                type : string

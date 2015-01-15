@@ -1,6 +1,7 @@
 test: worker-dir
 	rm -rf results/test
 	prove -v tester/tester :: --config=config/test.yml \
+	                          --schema=config.schema.yml \
 	                          --cd=$$worker101dir/modules \
 	                          --results=results/test
 

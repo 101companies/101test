@@ -7,11 +7,12 @@ use File::Path     qw(make_path remove_tree);
 use File::Slurp    qw(slurp);
 use Getopt::Long;
 use IPC::Run       qw();
+use JSON::Schema;
 use Test::More;
 use YAML           qw(LoadFile);
 
 
-use constant OPTIONS => qw(config cd results);
+use constant OPTIONS => qw(config schema cd results);
 
 my %options;
 GetOptions(\%options, map { "$_=s" } OPTIONS);
@@ -26,17 +27,23 @@ for (OPTIONS)
 $ENV{results101dir} = $options{results};
 
 
-my $test = LoadFile($options{config});
-chdir "$options{cd}" or die "Couldn't cd into $options{cd}: $!";
+my $test   = LoadFile($options{config});
+my $schema = LoadFile($options{schema});
+
+my $result = JSON::Schema->new($schema)->validate($test);
+if (!$result)
+{   die join "\n - ", "Error validating $options{config}:", $result->errors }
 
 
 my %base = map { /^\d+$/ ? () : ($_ => $test->{$_}) } keys %$test;
 
 
+chdir "$options{cd}" or die "Couldn't cd into $options{cd}: $!";
+
+
 for my $number (1 .. $test->{tests})
 {
     my %case = (%base, exists $test->{$number} ? %{$test->{$number}} : ());
-    $case{command} = [$case{command}] if not ref $case{command};
     $ENV{repo101branch} = $case{branch} // "$case{name}$number";
 
     my ($in, $out);
