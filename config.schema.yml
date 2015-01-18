@@ -1,3 +1,5 @@
+# This is a JSON schema for declaring a test.
+# Written in YAML for better readability and comments.
 title    : Test Definition Schema
 type     : object
 required :
@@ -5,50 +7,70 @@ required :
   - tests
   - command
 
+# The root test properties. You can override these values in the individual
+# test cases.
 properties :
+  # The name of the test, used as the base name for branches.
   name    :
     required : 1
     type     : string
+  # The number of tests, at least 1. Each test can have its own properties
+  # by referring to it by its number, see patternProperties below.
   tests   :
     required : 1
     type     : integer
     minimum  : 1
+  # The command as an array of strings, like ['make', '-s', 'test.run']. You
+  # don't have to worry about shell interpolation. You can't have any shell
+  # interpolation either though.
   command :
     required : 1
     type     : array
     items    :
       type : string
+  # The branch to use. If left out, this will be $name$number, where $name is
+  # the test name and $number is the number of the test case.
   branch  :
     type     : string
 
+# These are the configuration for each individual test case. You can override
+# several values from the root test and add validation to the test case.
 patternProperties :
+  # The key is the number of the test case.
   \d+ :
     type                 : object
     additionalProperties : 0
     properties           :
-
+      # Overrides the command from the root test.
       command :
         type  : array
         items :
           type : string
-
+      # Overrides the branch from the root test.
       branch :
         type : string
-
+      # Validation of the diff output.
       diff    :
         type              : object
+        # These map from the file name relative to the output directory to the
+        # operation performed on that file (A for added, M for modified and D
+        # for deleted).
         patternProperties :
           .* :
             type    : string
             pattern : ^[AMD]$
-
+      # Validation of files.
       files   :
         type              : object
         patternProperties :
+          # The path of the file, relative to the output directory.
           .* :
             type       : object
             properties :
+              # Checks if the file exists. Note that this is true if omitted!
               exists  :
                 type : {enum : [0, 1]}
+              # Compares if the content of the file is exactly the same as
+              # described. Watch out for trailing newlines.
               content :
                 type : string
