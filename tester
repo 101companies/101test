@@ -2,12 +2,10 @@
 use strict;
 use warnings;
 use Cwd            qw(abs_path);
-use File::Basename qw(dirname);
 use File::Path     qw(make_path remove_tree);
 use File::Slurp    qw(slurp);
 use Getopt::Long;
 use YAML           qw(LoadFile);
-BEGIN { push @INC, dirname $0 }
 use Test101::Test;
 
 

@@ -18,7 +18,7 @@ sub BUILD
 
     my @validators = map
     {
-        return () if not exists $args->{$_};
+        return if not exists $args->{$_};
         my $class = "Test101::\u$_";
         $class->new(%$args, arg => $args->{$_})
     } VALIDATORS;
