@@ -1,8 +1,8 @@
 package Test101::File;
 use strict;
 use warnings;
-use File::Slurp qw(slurp);
-use List::Util  qw(reduce);
+use File::Slurp     qw(slurp);
+use List::MoreUtils qw(true);
 use Test::More;
 
 use constant FILE_TESTS => qw(content);
@@ -27,7 +27,7 @@ sub BUILD
 sub test_count
 {
     my ($self) = @_;
-    reduce { defined $self->$b ? $a + 1 : $a } 1, FILE_TESTS
+    1 + true { defined $self->$_ } FILE_TESTS;
 }
 
 
