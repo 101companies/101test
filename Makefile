@@ -3,10 +3,12 @@ echo 'Environment variable worker101dir is not set, but the'; \
 echo 'tests need to know where 101worker is on your computer.'; \
 echo 'Use "export worker101dir=/path/to/101worker" to set the path.';
 
-info:
-	@echo 'Nothing to do by default.'
-	@echo 'The following tests are available:'
-	@ls config | sort | sed 's/\.yml$$//' | sed 's/^/    - /'
+
+install:
+	cpan install Class::Tiny File::Slurp IPC::Run JSON::Schema YAML
+
+
+info: list
 	@echo 'You can use "make TESTNAME.test" to run the test'
 	@echo 'called TESTNAME and "make all" to run all tests.'
 	@echo 'For verbose output, you can set the environment variable'
@@ -17,6 +19,12 @@ info:
 	    echo; \
 	    $(WORKER_ENV_WARNING) \
 	fi
+
+
+list:
+	@echo 'The following tests are available:'
+	@ls config | sort | sed 's/\.yml$$//' | sed 's/^/    - /'
+
 
 
 %.test: worker-dir
@@ -39,4 +47,4 @@ worker-dir:
 	fi
 
 
-.PHONY: info %.test all worker-dir
+.PHONY: install info list %.test all worker-dir

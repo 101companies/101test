@@ -6,9 +6,7 @@ use List::Util  qw(reduce);
 use Test::More;
 
 use constant FILE_TESTS => qw(content);
-use Class::Tiny qw(path tests), FILE_TESTS, {
-    exists => 1,
-};
+use Class::Tiny qw(path tests), FILE_TESTS, {exists => 1};
 
 
 sub BUILD
