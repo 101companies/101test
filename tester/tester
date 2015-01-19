@@ -37,12 +37,10 @@ my $result = JSON::Schema->new($schema)->validate($test);
 if (!$result)
 {   die join "\n - ", "Error validating $options{config}:", $result->errors }
 
-
-my %base = map { /^\d+$/ ? () : ($_ => $test->{$_}) } keys %$test;
-
-
 chdir "$options{cd}" or die "Couldn't cd into $options{cd}: $!";
 
+
+my %base = map { /^\d+$/ ? () : ($_ => $test->{$_}) } keys %$test;
 
 my @cases = map
 {
@@ -55,5 +53,5 @@ my @cases = map
     )
 } 1 .. $test->{tests};
 
-plan tests => reduce { $a + $b->tests } 0, @cases;
+plan tests => reduce { $a + $b->test_count } 0, @cases;
 $_->test for @cases;

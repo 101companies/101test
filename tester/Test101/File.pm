@@ -6,7 +6,7 @@ use List::Util  qw(reduce);
 use Test::More;
 
 use constant FILE_TESTS => qw(content);
-use Class::Tiny qw(path tests), FILE_TESTS, {exists => 1};
+use Class::Tiny qw(path), FILE_TESTS, {exists => 1};
 
 
 sub BUILD
@@ -22,8 +22,12 @@ sub BUILD
                 if defined $self->$_;
         }
     }
+}
 
-    $self->tests(reduce { defined $self->$b ? $a + 1 : $a } 1, FILE_TESTS);
+sub test_count
+{
+    my ($self) = @_;
+    reduce { defined $self->$b ? $a + 1 : $a } 1, FILE_TESTS
 }
 
 

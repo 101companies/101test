@@ -4,7 +4,7 @@ use warnings;
 use List::Util    qw(reduce);
 use Test101::File;
 
-use Class::Tiny qw(files tests);
+use Class::Tiny qw(files);
 
 
 sub BUILD
@@ -18,7 +18,12 @@ sub BUILD
     } keys %{$args->{arg}};
 
     $self->files(\@files);
-    $self->tests(reduce { $a + $b->tests } 0, @files);
+}
+
+sub test_count
+{
+    my ($self) = @_;
+    reduce { $a + $b->test_count } 0, @{$self->files}
 }
 
 

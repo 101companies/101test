@@ -4,7 +4,7 @@ use warnings;
 use Test::More;
 use YAML;
 
-use Class::Tiny qw(diff tests);
+use Class::Tiny qw(diff);
 
 
 sub BUILD
@@ -17,9 +17,10 @@ sub BUILD
         ($path => $args->{arg}{$_})
     } keys %{$args->{arg}};
 
-    $self->diff (\%diff);
-    $self->tests(1);
+    $self->diff(\%diff);
 }
+
+sub test_count { 1 }
 
 
 sub test
