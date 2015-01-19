@@ -46,9 +46,13 @@ chdir "$options{cd}" or die "Couldn't cd into $options{cd}: $!";
 
 my @cases = map
 {
-    my %args      = (%base, exists $test->{$_} ? %{$test->{$_}} : ());
-    $args{branch} = "$args{name}$_" if not exists $args{branch};
-    my $case = Test101::Case->new(%options, number => $_, %args);
+    Test101::Case->new(
+        branch => "$base{name}$_",
+        number => $_,
+        %options,
+        %base,
+        exists $test->{$_} ? %{$test->{$_}} : (),
+    )
 } 1 .. $test->{tests};
 
 plan tests => reduce { $a + $b->tests } 0, @cases;
