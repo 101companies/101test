@@ -30,10 +30,10 @@ list:
 
 %.test: worker-dir
 	rm -rf results/$*
-	prove $(PROVE_ARGS) tester/tester :: "--schema=config.schema.yml" \
-	                                     "--cd=$$worker101dir/modules" \
-	                                     "--config=config/$*.yml" \
-	                                     "--results=results/$*"
+	prove $(PROVE_ARGS) tester :: "--schema=config.schema.yml" \
+	                              "--cd=$$worker101dir/modules" \
+	                              "--config=config/$*.yml" \
+	                              "--results=results/$*"
 
 
 all:
