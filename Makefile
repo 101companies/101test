@@ -9,6 +9,9 @@ info:
 	@ls config | sort | sed 's/\.yml$$//' | sed 's/^/    - /'
 	@echo 'You can use "make TESTNAME.test" to run the test'
 	@echo 'called TESTNAME and "make all" to run all tests.'
+	@echo 'For verbose output, you can set the environment variable'
+	@echo 'PROVE_ARGS to -v, meaning you run make as follows:'
+	@echo '    PROVE_ARGS=-v make TARGET'
 	@if [ -z "$$worker101dir" ]; \
 	then \
 	    echo; \
@@ -19,9 +22,9 @@ info:
 %.test: worker-dir
 	rm -rf results/$*
 	prove $(PROVE_ARGS) tester/tester :: "--schema=config.schema.yml" \
-                                         "--cd=$$worker101dir/modules" \
-                                         "--config=config/$*.yml" \
-                                         "--results=results/$*"
+	                                     "--cd=$$worker101dir/modules" \
+	                                     "--config=config/$*.yml" \
+	                                     "--results=results/$*"
 
 
 all:
