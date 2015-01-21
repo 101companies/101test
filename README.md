@@ -29,11 +29,27 @@ Test Structure
 
 Each *test* consists of one or more *test cases*, which are numbered starting from 1. During each test case, a *branch* from this repository may be checked out to simulate a pull with changed files, a *command* will be executed and then the results of that command will be *validated*.
 
-The tests are based off of declarative definition files found in the `config` folder, which must follow the schema given in `config.schema.yml`. The tests are then run and validated automatically using `prove` and the `tester` program in this repo.
+The tests are based off of declarative definition files found in the [config](config) folder, which must follow the schema given in `config.schema.yml`. The tests are then run and validated automatically using `prove` and the [tester](tester) program in this repo.
 
 
-Creating Branches
------------------
+Creating Tests
+--------------
+
+Each test consists of a test definition and, optionally, branches in this repository.
+
+The test definition declares the number of tests, commands to be run, branches to be checked out and validations to be performed in each step.
+
+The branches exist to emulate changes in 101repo between runs of 101worker.
+
+
+### Test Definition
+
+The test definition is written in YAML, which is similar to JSON, but much easier to edit and read by humans. There is a schema definition in the [config.schema.yml](config.schema.yml). The test definitions are to be placed in the [config](config) folder and must end with `.yml` so that they work properly with the [Makefile](Makefile).
+
+In absence of a tutorial, see existing test definitions and the schema to write your own tests.
+
+
+### Branches
 
 Branches are used to imitate changes in 101repo between pulls. In each test case, a different branch can be specified. When running a test, the environment variable `repo101branch` is set to the appropriate value. The 101worker module `pull101repo` will correctly detect this, checkout the branch and create a diff between it and the branch from the previous test case.
 
