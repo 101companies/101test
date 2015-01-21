@@ -29,7 +29,7 @@ Test Structure
 
 Each *test* consists of one or more *test cases*, which are numbered starting from 1. During each test case, a *branch* from this repository may be checked out to simulate a pull with changed files, a *command* will be executed and then the results of that command will be *validated*.
 
-The tests are based off of declarative definition files found in the [config](config) folder, which must follow the schema given in `config.schema.yml`. The tests are then run and validated automatically using `prove` and the [tester](tester) program in this repo.
+The tests are based off of declarative definition files found in the [config](config) folder, which must follow the schema given in [config.schema.yml](config.schema.yml). The tests are then run and validated automatically using `prove` and the [tester](tester) program in this repo.
 
 
 Creating Tests
