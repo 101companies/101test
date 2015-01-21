@@ -67,7 +67,9 @@ patternProperties :
           .* :
             type       : object
             properties :
-              # Checks if the file exists. Note that this is true if omitted!
+              # Validates that the file exists (1) or not (0). Defaults to 1 if
+              # not given. Obviously, you can't use any file content validation
+              # if you set this to 0.
               exists  :
                 type : {enum : [0, 1]}
               # Compares if the content of the file is exactly the same as
