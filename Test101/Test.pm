@@ -3,7 +3,6 @@ use strict;
 use warnings;
 use List::Util    qw(reduce);
 use JSON::Schema;
-use Scalar::Util  qw(looks_like_number);
 use Test::More;
 use Test101::Case;
 
@@ -21,7 +20,7 @@ sub BUILD
     my (@strings, @numbers);
     for (keys %$config)
     {
-        if (looks_like_number $_)
+        if (/^\d+$/)
         {   push @numbers, $_ }
         else
         {   push @strings, $_ }
