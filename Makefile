@@ -5,8 +5,8 @@ echo 'Use "export worker101dir=/path/to/101worker" to set the path.';
 
 
 install:
-	cpan install Class::Tiny File::Slurp IPC::Run
-	             List::MoreUtils JSON::Schema YAML
+	cpan install Class::Tiny File::Slurp IPC::Run List::MoreUtils
+	             JSON::Schema Test::Most YAML
 
 
 info: list
