@@ -42,7 +42,7 @@ sub BUILD
     if (@useless)
     {
         warn "Useless test case(s): ", join ', ', sort { $a <=> $b } @useless;
-        warn "Valid test numbers are between 1 and $config->{tests}.";
+        warn "Test case numbers are between 1 and $config->{tests}.";
     }
 
     $self->cases(\@cases);
