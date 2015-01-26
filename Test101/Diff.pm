@@ -26,7 +26,6 @@ sub test_count { 1 }
 sub test
 {
     my ($self, $args) = @_;
-    local ($YAML::UseHeader, $YAML::SortKeys) = (0, 1);
     is_deeply $args->{diff}, $self->diff, "diff is:\n" . Dump($self->diff);
 }
 
