@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use List::Util    qw(reduce);
 use JSON::Schema;
+use Scalar::Util  qw(looks_like_number);
 use Test::More;
 use Test101::Case;
 
@@ -12,22 +13,38 @@ use Class::Tiny qw(config schema cd results cases);
 sub BUILD
 {
     my ($self, $args) = @_;
-    my  $config         = $self->config;
+    my  $config       = $self->config;
 
     my $valid = JSON::Schema->new($self->schema)->validate($config);
     die join "\n - ", 'Invalid test definition:', $valid->errors if not $valid;
 
-    my %base  = map { ($_ => $config->{$_}) } grep { !/^\d+$/ } keys %$config;
+    my (@strings, @numbers);
+    for (keys %$config)
+    {
+        if (looks_like_number $_)
+        {   push @numbers, $_ }
+        else
+        {   push @strings, $_ }
+    }
+
+    my %base  = map { ($_ => $config->{$_}) } @strings;
     my @cases = map
     {
         Test101::Case->new(
             branch  => "$base{name}$_",
-            number  => $_,
-            results => $self->results,
             %base,
             exists $config->{$_} ? %{$config->{$_}} : (),
+            number  => $_,
+            results => $self->results,
         )
     } 1 .. $config->{tests};
+
+    my @useless = grep { $_ < 1 || $_ > $config->{tests} } @numbers;
+    if (@useless)
+    {
+        warn "Useless test case(s): ", join ', ', sort { $a <=> $b } @useless;
+        warn "Valid test numbers are between 1 and $config->{tests}.";
+    }
 
     $self->cases(\@cases);
 }
