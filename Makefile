@@ -4,15 +4,6 @@ echo 'tests need to know where 101worker is on your computer.'; \
 echo 'Use "export worker101dir=/path/to/101worker" to set the path.';
 
 
-install:
-	cpan install Class::Tiny File::Slurp IPC::Run List::MoreUtils
-	             JSON::Schema Test::Most YAML
-
-
-clean:
-	rm -rf results
-
-
 info: list
 	@echo 'You can use "make TESTNAME.test" to run the test'
 	@echo 'called TESTNAME and "make all" to run all tests.'
@@ -24,6 +15,15 @@ info: list
 	    echo; \
 	    $(WORKER_ENV_WARNING) \
 	fi
+
+
+install:
+	cpan install Class::Tiny File::Slurp IPC::Run List::MoreUtils
+	             JSON::Schema Test::Most YAML
+
+
+clean:
+	rm -rf results
 
 
 list:
