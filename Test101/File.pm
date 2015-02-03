@@ -2,11 +2,13 @@ package Test101::File;
 use strict;
 use warnings;
 use File::Slurp     qw(slurp);
+use JSON            qw(decode_json);
 use List::MoreUtils qw(true);
 use Test::More;
+use Try::Tiny;
 
-use constant FILE_TESTS => qw(content);
-use Class::Tiny qw(path), FILE_TESTS, {exists => 1};
+use constant FILE_TESTS => qw(content json);
+use Class::Tiny qw(path json_str), FILE_TESTS, {exists => 1};
 
 
 sub BUILD
@@ -22,7 +24,25 @@ sub BUILD
                 if defined $self->$_;
         }
     }
+
+    if (defined $self->json)
+    {
+        if (ref $self->json)
+        {
+            my $encoder = JSON->new->utf8->pretty->canonical;
+            $self->json_str($encoder->encode($self->json));
+        }
+        else
+        {
+            $self->json_str($self->json);
+            try
+            {   $self->json(decode_json($self->json)) }
+            catch
+            {   die "JSON decode error $_\nIn this JSON:\n" . $self->json }
+        }
+    }
 }
+
 
 sub test_count
 {
@@ -46,6 +66,7 @@ sub test
     {   ok !$exists, "file does not exist: $path" }
 }
 
+
 sub file_tests
 {
     my ($self, $path, $exists) = @_;
@@ -64,10 +85,27 @@ sub file_tests
     }
 }
 
+
 sub test_content
 {
     my ($self, $path, $content) = @_;
-    is $content, $self->content, "content of $path is:\n$content";
+    is $content, $self->content, "content of $path is:\n" . $self->content;
+}
+
+
+sub test_json
+{
+    my ($self, $path, $content) = @_;
+
+    try
+    {
+        my $json = decode_json($content) or die $!;
+        is_deeply $json, $self->json, "json of $path is:\n" . $self->json_str;
+    }
+    catch
+    {
+        fail "$path has invalid json ($_):\n$content";
+    };
 }
 
 
