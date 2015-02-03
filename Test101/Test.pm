@@ -56,7 +56,7 @@ sub test
     chdir $self->cd or die "Couldn't cd into ${\$self->cd}: $!";
     $ENV{results101dir} = $self->results;
 
-    plan tests => reduce { $a + $b->test_count } 0, @{$self->cases};
+    plan tests => scalar @{$self->cases};
     $_->test for @{$self->cases};
 }
 

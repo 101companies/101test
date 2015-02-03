@@ -38,21 +38,25 @@ sub test
 {
     my ($self)          = @_;
     $ENV{repo101branch} = $self->branch;
-    note sprintf 'case %d, branch %s', $self->number, $self->branch;
 
-    my ($exec, $in, $out) = ([split /\s+/, $self->command]);
-    ok run($exec, \$in, \$out), 'command ran ok: ' . $self->command;
-    note "command exited with $?";
+    subtest "case ${\$self->number}, branch ${\$self->branch}" => sub
+    {
+        plan tests => $self->test_count;
 
-    my %diff = map { /^\s*([AMD])\s+(.+?)\s*$/ ? ($2 => $1) : () }
-                   split /\n/, $out;
-    my $args = {
-        number => $self->number,
-        branch => $self->branch,
-        diff   => \%diff,
+        my ($exec, $in, $out) = ([split /\s+/, $self->command]);
+        ok run($exec, \$in, \$out), 'command ran ok: ' . $self->command;
+        note "command exited with $?";
+
+        my %diff = map { /^\s*([AMD])\s+(.+?)\s*$/ ? ($2 => $1) : () }
+                       split /\n/, $out;
+        my $args = {
+            number => $self->number,
+            branch => $self->branch,
+            diff   => \%diff,
+        };
+
+        $_->test($args) for @{$self->validators};
     };
-
-    $_->test($args) for @{$self->validators};
 }
 
 
