@@ -47,7 +47,7 @@ generated/%.t:
 	prove $(PROVE_ARGS) generated/$*.t
 
 
-all:
+all: worker-dir
 	make `ls config | sed 's/^/generated\//' | sed 's/\.yml$$/.t/'`
 	rm -rf results
 	prove $(PROVE_ARGS) generated
