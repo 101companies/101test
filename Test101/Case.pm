@@ -39,8 +39,8 @@ sub test
     $ENV{repo101branch} = $self->branch;
     note sprintf 'case %d, branch %s', $self->number, $self->branch;
 
-    my ($in, $out);
-    ok run($self->command, \$in, \$out), "command ran ok: @{$self->command}";
+    my ($exec, $in, $out) = ([split /\s+/, $self->command]);
+    ok run($exec, \$in, \$out), 'command ran ok: ' . $self->command;
     note "command exited with $?";
 
     my %diff = map { /^\s*([AMD])\s+(.+?)\s*$/ ? ($2 => $1) : () }

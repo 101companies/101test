@@ -9,6 +9,10 @@ install:
 	             JSON::Schema Test::Most YAML
 
 
+clean:
+	rm -rf results
+
+
 info: list
 	@echo 'You can use "make TESTNAME.test" to run the test'
 	@echo 'called TESTNAME and "make all" to run all tests.'
@@ -48,4 +52,4 @@ worker-dir:
 	fi
 
 
-.PHONY: install info list %.test all worker-dir
+.PHONY: install clean info list %.test all worker-dir

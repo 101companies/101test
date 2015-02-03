@@ -20,14 +20,12 @@ properties :
     required : 1
     type     : integer
     minimum  : 1
-  # The command as an array of strings, like ['make', '-s', 'test.run']. You
-  # don't have to worry about shell interpolation. You can't have any shell
-  # interpolation either though.
+  # The command as an array of strings, like ``make -s test.run''. You can't
+  # use shell metacharacters, the commands will be split by whitespace and
+  # directly passed to exec(1).
   command :
     required : 1
-    type     : array
-    items    :
-      type : string
+    type     : string
   # The branch to use. If left out, this will be $name$number, where $name is
   # the test name and $number is the number of the test case.
   branch  :
@@ -43,9 +41,7 @@ patternProperties :
     properties           :
       # Overrides the command from the root test.
       command :
-        type  : array
-        items :
-          type : string
+        type  : string
       # Overrides the branch from the root test.
       branch :
         type : string
