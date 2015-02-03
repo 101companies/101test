@@ -23,7 +23,7 @@ install:
 
 
 clean:
-	rm -rf results
+	rm -rf results generated
 
 
 list:
@@ -31,17 +31,26 @@ list:
 	@ls config | sort | sed 's/\.yml$$//' | sed 's/^/    - /'
 
 
+generated/%.t:
+	mkdir -p generated
+	echo "exec 'perl',"                              > $@
+	echo "     'tester',"                           >> $@
+	echo "     '--schema=config.schema.yml',"       >> $@
+	echo '     "--cd=$$ENV{worker101dir}/modules",' >> $@
+	echo "     '--config=config/$*.yml',"           >> $@
+	echo "     '--results=results/$*'"              >> $@
+
 
 %.test: worker-dir
+	make generated/$*.t
 	rm -rf results/$*
-	prove $(PROVE_ARGS) tester :: "--schema=config.schema.yml" \
-	                              "--cd=$$worker101dir/modules" \
-	                              "--config=config/$*.yml" \
-	                              "--results=results/$*"
+	prove $(PROVE_ARGS) generated/$*.t
 
 
 all:
-	make `ls config | sed 's/\.yml$$/.test/'`
+	make `ls config | sed 's/^/generated\//' | sed 's/\.yml$$/.t/'`
+	rm -rf results
+	prove $(PROVE_ARGS) generated
 
 
 worker-dir:
