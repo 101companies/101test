@@ -1,0 +1,36 @@
+name    : rules101meta
+tests   : 2
+command : make -s test-rules101meta.run
+
+# Just an empty repo with no rules
+1 :
+  branch : rules101meta1
+  diff   :
+    101repo/README.md            : A
+    101web/data/dumps/rules.json : A
+  files  : &emptyrules
+    101web/data/dumps/rules.json :
+      json : |
+        {
+            "numbers" : {
+                "numberOfPredicates" : 0,
+                "numberOfProblems"   : 0,
+                "numberOfRules"      : 0,
+                "numberOfSuffixes"   : 0
+            },
+            "problems" : {
+                "invalidFiles"       : [],
+                "unreadableFiles"    : []
+            },
+            "results" : {
+                "predicates"         : {},
+                "rules"              : [],
+                "suffixes"           : []
+            }
+        }
+
+# The empty repo again, making sure that there's no superfluous diff
+2 :
+  branch : rules101meta1
+  diff   : {}
+  files  : *emptyrules
