@@ -16,12 +16,13 @@ sub BUILD
     my ($self, $args) = @_;
     my  $tests        = 1;
 
-    my @validators = map
+    my @validators;
+    for (VALIDATORS)
     {
-        return if not exists $args->{$_};
+        next if not exists $args->{$_};
         my $class = "Test101::\u$_";
-        $class->new(%$args, arg => $args->{$_})
-    } VALIDATORS;
+        push @validators, $class->new(%$args, arg => $args->{$_})
+    }
 
     $self->validators(\@validators);
 }
