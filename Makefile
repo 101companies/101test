@@ -42,13 +42,13 @@ generated/%.t:
 
 
 %.test: worker-dir
-	make generated/$*.t
+	make -s generated/$*.t
 	rm -rf results/$*
 	prove $(PROVE_ARGS) generated/$*.t
 
 
 all: worker-dir
-	make `ls config | sed 's/^/generated\//' | sed 's/\.yml$$/.t/'`
+	make -s `ls config | sed 's/^/generated\//' | sed 's/\.yml$$/.t/'`
 	rm -rf results
 	prove $(PROVE_ARGS) generated
 
