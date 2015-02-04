@@ -1,3 +1,22 @@
 name    : run101meta-basics
-tests   : 1
+tests   : 2
 command : make -s test-run101meta-basics.run
+
+1 :
+  diff   :
+    101repo/README.md              : A
+    101web/data/dumps/rules.json   : A
+    101web/data/dumps/matches.json : A
+  files  : &emptymatches
+    101web/data/dumps/matches.json :
+      json : |
+        {
+            "failures" : [],
+            "matches"  : [],
+            "rules"    : []
+        }
+
+2 :
+  branch : run101meta-basics1
+  diff   : {}
+  files  : *emptymatches

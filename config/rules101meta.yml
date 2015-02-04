@@ -4,7 +4,6 @@ command : make -s test-rules101meta.run
 
 # Just an empty repo with no rules
 1 :
-  branch : rules101meta1
   diff   :
     101repo/README.md            : A
     101web/data/dumps/rules.json : A
