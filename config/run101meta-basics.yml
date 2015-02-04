@@ -1,0 +1,3 @@
+name    : run101meta-basics
+tests   : 1
+command : make -s test-run101meta-basics.run
