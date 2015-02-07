@@ -13,7 +13,7 @@ sub BUILD
 
     my %diff = map
     {
-        my $path = m{^/} ? $_ : "$args->{results}/$_";
+        my $path = m{^/} ? $_ : "$args->{output}/$_";
         ($path => $args->{arg}{$_})
     } keys %{$args->{arg}};
 

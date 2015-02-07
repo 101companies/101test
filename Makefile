@@ -23,7 +23,7 @@ install:
 
 
 clean:
-	rm -rf results generated
+	rm -rf output generated
 
 
 list:
@@ -38,18 +38,18 @@ generated/%.t:
 	echo "     '--schema=config.schema.yml',"       >> $@
 	echo '     "--cd=$$ENV{worker101dir}/modules",' >> $@
 	echo "     '--config=config/$*.yml',"           >> $@
-	echo "     '--results=results/$*'"              >> $@
+	echo "     '--output=output/$*'"              >> $@
 
 
 %.test: worker-dir
 	make -s generated/$*.t
-	rm -rf results/$*
+	rm -rf output/$*
 	prove $(PROVE_ARGS) generated/$*.t
 
 
 all: worker-dir
 	make -s `ls config | sed 's/^/generated\//' | sed 's/\.yml$$/.t/'`
-	rm -rf results
+	rm -rf output
 	prove $(PROVE_ARGS) generated
 
 

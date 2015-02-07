@@ -6,7 +6,7 @@ use JSON::Schema;
 use Test::More;
 use Test101::Case;
 
-use Class::Tiny qw(config schema cd results cases);
+use Class::Tiny qw(config schema cd output cases);
 
 
 sub BUILD
@@ -34,7 +34,7 @@ sub BUILD
             %base,
             exists $config->{$_} ? %{$config->{$_}} : (),
             number  => $_,
-            results => $self->results,
+            output => $self->output,
         )
     } 1 .. $config->{tests};
 
@@ -54,7 +54,7 @@ sub test
     my ($self) = @_;
 
     chdir $self->cd or die "Couldn't cd into ${\$self->cd}: $!";
-    $ENV{results101dir} = $self->results;
+    $ENV{output101dir} = $self->output;
 
     plan tests => scalar @{$self->cases};
     $_->test for @{$self->cases};

@@ -8,7 +8,7 @@ use YAML           qw(LoadFile);
 use Test101::Test;
 
 
-use constant OPTIONS => qw(config schema cd results);
+use constant OPTIONS => qw(config schema cd output);
 
 my %options;
 GetOptions(\%options, map { "$_=s" } OPTIONS);
