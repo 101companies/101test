@@ -48,7 +48,7 @@ generated/%.t:
 
 
 all: worker-dir
-	make -s `ls config | sed 's/^/generated\//' | sed 's/\.yml$$/.t/'`
+	make -s `ls config | sort | sed 's/^/generated\//' | sed 's/\.yml$$/.t/'`
 	rm -rf output
 	prove $(PROVE_ARGS) generated
 
