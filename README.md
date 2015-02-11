@@ -55,6 +55,6 @@ Branches are used to imitate changes in 101repo between pulls. In each test case
 
 It is recommended that you name your branches `$test_name$test_case_number`, so that you won't need to manually specifiy the branch names in your definition file. For example, if you test is called *pull* and the branch is for the *4th* test case, you'd call the branch `pull4`.
 
-To create an empty branch, run `git checkout --orphan BRANCHNAME`. You can (and probably should) run `git rm -rf .` to clear your branch of all files and actually start from an empty branch. Then add any files you want, `git add` and `git commit` them as normal. To push the branch to the Github repo, you have to run `git push -u origin BRANCHNAME`.
+To create an empty branch, run `git checkout --orphan BRANCHNAME`. You can (and probably should) run `git rm -rf .` and `rm -rf *` to clear your branch of all files and actually start from an empty branch. Then add any files you want, `git add` and `git commit` them as normal. To push the branch to the Github repo, you have to run `git push -u origin $(git rev-parse --abbrev-ref HEAD)` (the thing within the `$()` resolves to your current BRANCHNAME).
 
-For the next test case, create a new branch without the `--orphan` option and don't remove all the files (unless you really want them all gone for the next test case, that is). Otherwise proceed as above.
+For the next test case, run `git checkout -b BRANCHNAME` (note: `-b` instead of `--orphan`). Then add/modify/delete files as necessary, commit and push your branch as above. Then repeat for the next test case.
