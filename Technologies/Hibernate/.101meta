@@ -1,0 +1,25 @@
+[
+    {
+        "predicate": "technologies/Java_platform/javaImport.py",
+        "args": [
+            "org.hibernate"
+        ],
+        "suffix": ".java",
+        "metadata": [
+            {
+                "language": "Java"
+            },
+            {
+                "dependsOn": "Hibernate"
+            }
+        ]
+    },
+    {
+        "basename": "#^hibernate(.*)[.]jar$#",
+        "metadata": [
+            {
+                "dependsOn": "Hibernate"
+            }
+        ]
+    }
+]
