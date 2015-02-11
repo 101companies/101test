@@ -1,7 +1,7 @@
 [
 	{
 		"basename" : "#^syb\\.py$#",
-		metadata : {
+		"metadata" : {
 			"relevance" : "reuse"
 		}		
 	}
