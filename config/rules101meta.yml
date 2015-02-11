@@ -1,11 +1,10 @@
 name    : rules101meta
-tests   : 2
+tests   : 4
 command : make -s test-rules101meta.run
 
 # Just an empty repo with no rules
 1 :
-  diff   :
-    101repo/README.md            : A
+  indiff :
     101web/data/dumps/rules.json : A
   files  : &emptyrules
     101web/data/dumps/rules.json :
@@ -18,13 +17,13 @@ command : make -s test-rules101meta.run
                 "numberOfSuffixes"   : 0
             },
             "problems" : {
-                "invalidFiles"       : [],
-                "unreadableFiles"    : []
+                "invalidFiles"    : [],
+                "unreadableFiles" : []
             },
             "results" : {
-                "predicates"         : {},
-                "rules"              : [],
-                "suffixes"           : []
+                "predicates" : {},
+                "suffixes"   : [],
+                "rules"      : []
             }
         }
 
@@ -33,3 +32,95 @@ command : make -s test-rules101meta.run
   branch : rules101meta1
   diff   : {}
   files  : *emptyrules
+
+# Proper test with .101meta files
+3 :
+  indiff :
+    101web/data/dumps/rules.json : M
+  files  : &fullrules
+    101web/data/dumps/rules.json :
+      json : |
+        {
+            "numbers"  : {
+                "numberOfPredicates" : 1,
+                "numberOfProblems"   : 1,
+                "numberOfRules"      : 5,
+                "numberOfSuffixes"   : 3
+            },
+            "problems" : {
+                "invalidFiles"    : [],
+                "unreadableFiles" : [
+                    "Contributions/pythonSyb/.101meta"
+                ]
+            },
+            "results"  : {
+                "suffixes"   : [".java", ".cpp", ".hpp"],
+                "predicates" : {
+                    "technologies/Java_platform/javaImport.py" : [
+                        "org.hibernate"
+                    ]
+                },
+                "rules"      : [
+                    {
+                        "filename" : "Technologies/Hibernate/.101meta",
+                        "rule"     : {
+                            "args"      : ["org.hibernate"],
+                            "predicate" : "technologies/Java_platform/javaImport.py",
+                            "suffix"    : ".java",
+                            "metadata"  : [
+                                {"language"  : "Java"     },
+                                {"dependsOn" : "Hibernate"}
+                            ]
+                        }
+                    },
+                    {
+                        "filename" : "Technologies/Hibernate/.101meta",
+                        "rule"     : {
+                            "basename" : "#^hibernate(.*)[.]jar$#",
+                            "metadata" : [
+                                {"dependsOn" : "Hibernate"}
+                            ]
+                        }
+                    },
+                    {
+                        "filename" : "Languages/Java/.101meta",
+                        "rule"     : {
+                            "suffix"   : ".java",
+                            "metadata" : [
+                                {"geshi"     : "java"                                    },
+                                {"language"  : "Java"                                    },
+                                {"validator" : "technologies/JValidator/validator.py"    },
+                                {"extractor" : "technologies/JFactExtractor/extractor.py"},
+                                {"locator"   : "technologies/JFragmentLocator/locator.py"}
+                            ]
+                        }
+                    },
+                    {
+                        "filename" : "Languages/CPlusPlus/.101meta",
+                        "rule"     : {
+                            "suffix"   : ".cpp",
+                            "metadata" : [
+                                {"geshi"    : "cpp"      },
+                                {"language" : "CPlusPlus"}
+                            ]
+                        }
+                    },
+                    {
+                        "filename" : "Languages/CPlusPlus/.101meta",
+                        "rule"     : {
+                            "suffix"   : ".hpp",
+                            "metadata" : [
+                                {"geshi"    : "cpp"      },
+                                {"language" : "CPlusPlus"}
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+
+# Test with the same files again to make sure the file isn't generated again
+4 :
+  branch : rules101meta3
+  diff   : {}
+  files  : *fullrules
