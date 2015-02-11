@@ -45,8 +45,8 @@ patternProperties :
       # Overrides the branch from the root test.
       branch :
         type : string
-      # Validation of the diff output.
-      diff    :
+      # Validation of the entire diff output.
+      diff    : &diff
         type              : object
         # These map from the file name relative to the output directory to the
         # operation performed on that file (A for added, M for modified and D
@@ -55,6 +55,9 @@ patternProperties :
           .* :
             type    : string
             pattern : ^[AMD]$
+      # Ensure that certain entries appear in the diff output. Saves having to
+      # write down the entire diff.
+      indiff  : *diff
       # Validation of files.
       files   :
         type              : object

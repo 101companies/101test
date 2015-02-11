@@ -5,7 +5,7 @@ use IPC::Run   qw(run);
 use List::Util qw(reduce);
 use Test::More;
 
-use constant VALIDATORS => qw(diff files);
+use constant VALIDATORS => qw(diff indiff files);
 require "Test101/\u$_.pm" for VALIDATORS;
 
 use Class::Tiny qw(number command branch validators);
