@@ -1,5 +1,5 @@
 name    : rules101meta
-tests   : 4
+tests   : 6
 command : make -s test-rules101meta.run
 
 # Just an empty repo with no rules
@@ -124,3 +124,45 @@ command : make -s test-rules101meta.run
   branch : rules101meta3
   diff   : {}
   files  : *fullrules
+
+# After removing all rules but the failing one and fixing that to be valid JSON
+5 :
+  indiff :
+    101repo/Contributions/pythonSyb/.101meta : M
+    101web/data/dumps/rules.json             : M
+  files  : &somerules
+    101web/data/dumps/rules.json :
+      json : |
+        {
+            "numbers"  : {
+                "numberOfPredicates" : 0,
+                "numberOfProblems"   : 0,
+                "numberOfRules"      : 1,
+                "numberOfSuffixes"   : 0
+            },
+            "problems" : {
+                "invalidFiles"    : [],
+                "unreadableFiles" : []
+            },
+            "results"  : {
+                "suffixes"   : [],
+                "predicates" : {},
+                "rules"      : [
+                    {
+                        "filename" : "Contributions/pythonSyb/.101meta",
+                        "rule"     : {
+                            "basename" : "#^syb\\.py$#",
+                            "metadata" : [
+                                {"relevance" : "reuse"}
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+
+# And again, just checking that nothing changes when it shouldn't
+6 :
+  branch : rules101meta5
+  diff   : {}
+  files  : *somerules
