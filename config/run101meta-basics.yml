@@ -13,7 +13,7 @@ command : make -s test-run101meta-basics.run
       json : |
         {
             "failures" : [],
-            "matches"  : [],
+            "matches"  : {},
             "rules"    : []
         }
 
@@ -34,12 +34,118 @@ command : make -s test-run101meta-basics.run
     101web/data/resources/Contributions/Java/Hibernate.java.matches.json      : A
     101web/data/resources/Contributions/Java/hibernate-1-2-3.jar.matches.json : A
   files  :
-    # Only resources that have matches are actually created.
-    101web/data/resources/Contributions/C                                     :
+    # We don't have rules for C in this step, so no matches should be created.
+    101web/data/resources/Contributions/C :
       exists : 0
-    101web/data/resources/Contributions/CPlusPlus/main.cpp.matches.json       : {}
-    101web/data/resources/Contributions/CPlusPlus/Header.hpp.matches.json     : {}
-    101web/data/resources/Contributions/Java/Main.java.matches.json           : {}
-    101web/data/resources/Contributions/Java/Hibernate.java.matches.json      : {}
-    101web/data/resources/Contributions/Java/hibernate-1-2-3.jar.matches.json : {}
-    101web/data/dumps/matches.json                                            : {}
+    101web/data/resources/Contributions/CPlusPlus/main.cpp.matches.json :
+      json : &cppmatches |
+        [
+          {"metadata" : {"geshi"    : "cpp"      }},
+          {"metadata" : {"language" : "CPlusPlus"}}
+        ]
+    101web/data/resources/Contributions/CPlusPlus/Header.hpp.matches.json :
+      json : *cppmatches
+    101web/data/resources/Contributions/Java/Main.java.matches.json :
+      json : &javamatches |
+        [
+          {"metadata" : {"geshi"     : "java"                                    }},
+          {"metadata" : {"language"  : "Java"                                    }},
+          {"metadata" : {"validator" : "technologies/JValidator/validator.py"    }},
+          {"metadata" : {"extractor" : "technologies/JFactExtractor/extractor.py"}},
+          {"metadata" : {"locator"   : "technologies/JFragmentLocator/locator.py"}}
+        ]
+    101web/data/resources/Contributions/Java/Hibernate.java.matches.json :
+      json : *javamatches
+    101web/data/resources/Contributions/Java/hibernate-1-2-3.jar.matches.json :
+      json : |
+        [
+          {"metadata" : {"dependsOn" : "Hibernate"}}
+        ]
+    101web/data/dumps/matches.json :
+      json : |
+        {
+          "failures" : [],
+          "matches"  : {
+            "Contributions/CPlusPlus/Header.hpp" : [
+              {"metadata" : {"geshi"    : "cpp"      }},
+              {"metadata" : {"language" : "CPlusPlus"}}
+            ],
+            "Contributions/CPlusPlus/main.cpp"   : [
+              {"metadata" : {"geshi"    : "cpp"      }},
+              {"metadata" : {"language" : "CPlusPlus"}}
+            ],
+            "Contributions/Java/Hibernate.java"  : [
+              {"metadata" : {"geshi"     : "java"                                    }},
+              {"metadata" : {"language"  : "Java"                                    }},
+              {"metadata" : {"validator" : "technologies/JValidator/validator.py"    }},
+              {"metadata" : {"extractor" : "technologies/JFactExtractor/extractor.py"}},
+              {"metadata" : {"locator"   : "technologies/JFragmentLocator/locator.py"}}
+            ],
+            "Contributions/Java/Main.java"       : [
+              {"metadata" : {"geshi"     : "java"                                    }},
+              {"metadata" : {"language"  : "Java"                                    }},
+              {"metadata" : {"validator" : "technologies/JValidator/validator.py"    }},
+              {"metadata" : {"extractor" : "technologies/JFactExtractor/extractor.py"}},
+              {"metadata" : {"locator"   : "technologies/JFragmentLocator/locator.py"}}
+            ],
+            "Contributions/Java/hibernate-1-2-3.jar" : [
+              {"metadata" : {"dependsOn" : "Hibernate"}}
+            ]
+          },
+          "rules"    : [
+            {
+              "filename" : "Technologies/Hibernate/.101meta",
+              "rule"     : {
+                "args"      : ["org.hibernate"],
+                "suffix"    : ".java",
+                "predicate" : "technologies/Java_platform/javaImport.py",
+                "metadata"  : [
+                  {"language"  : "Java"     },
+                  {"dependsOn" : "Hibernate"}
+                ]
+              }
+            },
+            {
+              "filename" : "Technologies/Hibernate/.101meta",
+              "rule"     : {
+                "basename" : "#^hibernate(.*)[.]jar$#",
+                "metadata" : [
+                  {"dependsOn" : "Hibernate"}
+                ]
+              }
+            },
+            {
+              "filename" : "Languages/Java/.101meta",
+              "rule"     : {
+                "suffix"   : ".java",
+                "metadata" : [
+                  {"geshi"     : "java"                                    },
+                  {"language"  : "Java"                                    },
+                  {"validator" : "technologies/JValidator/validator.py"    },
+                  {"extractor" : "technologies/JFactExtractor/extractor.py"},
+                  {"locator"   : "technologies/JFragmentLocator/locator.py"}
+                ]
+              }
+            },
+            {
+              "filename" : "Languages/CPlusPlus/.101meta",
+              "rule"     : {
+                "suffix"   : ".cpp",
+                "metadata" : [
+                  {"geshi"    : "cpp"      },
+                  {"language" : "CPlusPlus"}
+                ]
+              }
+            },
+            {
+              "filename" : "Languages/CPlusPlus/.101meta",
+              "rule"     : {
+                "suffix"   : ".hpp",
+                "metadata" : [
+                  {"geshi"    : "cpp"      },
+                  {"language" : "CPlusPlus"}
+                ]
+              }
+            }
+          ]
+        }
