@@ -1,7 +1,8 @@
 name    : run101meta-basics
-tests   : 2
+tests   : 3
 command : make -s test-run101meta-basics.run
 
+# Empty matches with no rules.
 1 :
   diff   :
     101repo/README.md              : A
@@ -16,7 +17,29 @@ command : make -s test-run101meta-basics.run
             "rules"    : []
         }
 
+# Same thing again to make sure that no superfluous diff is generated.
 2 :
   branch : run101meta-basics1
   diff   : {}
   files  : *emptymatches
+
+# Now with rules and stuff to match over.
+3 :
+  indiff :
+    101web/data/dumps/rules.json                                              : M
+    101web/data/dumps/matches.json                                            : M
+    101web/data/resources/Contributions/CPlusPlus/main.cpp.matches.json       : A
+    101web/data/resources/Contributions/CPlusPlus/Header.hpp.matches.json     : A
+    101web/data/resources/Contributions/Java/Main.java.matches.json           : A
+    101web/data/resources/Contributions/Java/Hibernate.java.matches.json      : A
+    101web/data/resources/Contributions/Java/hibernate-1-2-3.jar.matches.json : A
+  files  :
+    # Only resources that have matches are actually created.
+    101web/data/resources/Contributions/C                                     :
+      exists : 0
+    101web/data/resources/Contributions/CPlusPlus/main.cpp.matches.json       : {}
+    101web/data/resources/Contributions/CPlusPlus/Header.hpp.matches.json     : {}
+    101web/data/resources/Contributions/Java/Main.java.matches.json           : {}
+    101web/data/resources/Contributions/Java/Hibernate.java.matches.json      : {}
+    101web/data/resources/Contributions/Java/hibernate-1-2-3.jar.matches.json : {}
+    101web/data/dumps/matches.json                                            : {}
