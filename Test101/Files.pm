@@ -14,7 +14,7 @@ sub BUILD
     my @files = map
     {
         my $path = m{^/} ? $_ : "$args->{output}/$_";
-        Test101::File->new(path => $path, %{$args->{arg}{$_}})
+        Test101::File->new(%$args, path => $path, %{$args->{arg}{$_}})
     } keys %{$args->{arg}};
 
     $self->files(\@files);

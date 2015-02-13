@@ -39,7 +39,10 @@ sub BUILD
             try
             {   $self->json(decode_json($self->json)) }
             catch
-            {   die "JSON decode error $_\nIn this JSON:\n" . $self->json }
+            {
+                die "JSON decode error $_\nIn case #$args->{number} "
+                  . "with this JSON:\n" . $self->json
+            };
         }
     }
 }
