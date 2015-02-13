@@ -1,5 +1,5 @@
 name    : run101meta-basics
-tests   : 3
+tests   : 4
 command : make -s test-run101meta-basics.run
 
 # Empty matches with no rules.
@@ -35,7 +35,7 @@ command : make -s test-run101meta-basics.run
     101web/data/resources/Contributions/Java/Main.java.matches.json           : A
     101web/data/resources/Contributions/Java/Hibernate.java.matches.json      : A
     101web/data/resources/Contributions/Java/hibernate-1-2-3.jar.matches.json : A
-  files  :
+  files  : &fullmatches
     101web/data/resources/Contributions/C :
       exists : 0
     101web/data/resources/Contributions/CPlusPlus/main.cpp.matches.json :
@@ -150,3 +150,9 @@ command : make -s test-run101meta-basics.run
             }
           ]
         }
+
+# Another empty pull to ensure nothing changes that shouldn't.
+4 :
+  branch : run101meta-basics3
+  diff   : {}
+  files  : *fullmatches
