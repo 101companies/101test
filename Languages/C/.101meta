@@ -1,0 +1,16 @@
+[
+    {
+        "suffix"   : ".c",
+        "metadata" : [
+            {"geshi"   : "c"},
+            {"language": "C"}
+        ]
+    },
+    {
+        "suffix" : ".h",
+        "metadata" : [
+            {"geshi"    : "c"},
+            {"language" : "C"}
+        ]
+    }
+]
