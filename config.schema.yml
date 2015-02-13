@@ -57,7 +57,14 @@ patternProperties :
             pattern : ^[AMD]$
       # Ensure that certain entries appear in the diff output. Saves having to
       # write down the entire diff.
-      indiff  : *diff
+      indiff  : 
+        type              : object
+        patternProperties :
+          # Same as diff again, but ~ (null) is also allowed as an operation
+          # to validate that the path does not appear in the diff.
+          .* :
+            type    : ['string', 'null']
+            pattern : ^[AMD]$
       # Validation of files.
       files   :
         type              : object

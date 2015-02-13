@@ -23,18 +23,19 @@ command : make -s test-run101meta-basics.run
   diff   : {}
   files  : *emptymatches
 
-# Now with rules and stuff to match over.
+# Now with rules and files to match over.
+# There's no rules for C here, so stuff in Contributions/C shouldn't match.
 3 :
   indiff :
     101web/data/dumps/rules.json                                              : M
     101web/data/dumps/matches.json                                            : M
+    101web/data/resources/Contributions/C/main.c                              : ~
     101web/data/resources/Contributions/CPlusPlus/main.cpp.matches.json       : A
     101web/data/resources/Contributions/CPlusPlus/Header.hpp.matches.json     : A
     101web/data/resources/Contributions/Java/Main.java.matches.json           : A
     101web/data/resources/Contributions/Java/Hibernate.java.matches.json      : A
     101web/data/resources/Contributions/Java/hibernate-1-2-3.jar.matches.json : A
   files  :
-    # We don't have rules for C in this step, so no matches should be created.
     101web/data/resources/Contributions/C :
       exists : 0
     101web/data/resources/Contributions/CPlusPlus/main.cpp.matches.json :

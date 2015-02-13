@@ -16,7 +16,12 @@ sub test
     my ($self, $args) = @_;
 
     while (my ($path, $op) = each %{$self->diff})
-    {   is $args->{diff}{$path}, $op, "is in diff: $op $path" }
+    {
+        if (defined $op)
+        {   is $args->{diff}{$path}, $op, "is in diff: $op $path" }
+        else
+        {   ok !exists $args->{diff}{$path}, "not in diff: $path" }
+    }
 }
 
 
