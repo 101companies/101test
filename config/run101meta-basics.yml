@@ -1,5 +1,5 @@
 name    : run101meta-basics
-tests   : 4
+tests   : 5
 command : make -s test-run101meta-basics.run
 
 # Empty matches with no rules.
@@ -30,6 +30,7 @@ command : make -s test-run101meta-basics.run
     101web/data/dumps/rules.json                                              : M
     101web/data/dumps/matches.json                                            : M
     101web/data/resources/Contributions/C/main.c                              : ~
+    101web/data/resources/Contributions/C/Header.h                            : ~
     101web/data/resources/Contributions/CPlusPlus/main.cpp.matches.json       : A
     101web/data/resources/Contributions/CPlusPlus/Header.hpp.matches.json     : A
     101web/data/resources/Contributions/Java/Main.java.matches.json           : A
@@ -95,6 +96,39 @@ command : make -s test-run101meta-basics.run
           },
           "rules"    : [
             {
+              "filename" : "Languages/CPlusPlus/.101meta",
+              "rule"     : {
+                "suffix"   : ".cpp",
+                "metadata" : [
+                  {"geshi"    : "cpp"      },
+                  {"language" : "CPlusPlus"}
+                ]
+              }
+            },
+            {
+              "filename" : "Languages/CPlusPlus/.101meta",
+              "rule"     : {
+                "suffix"   : ".hpp",
+                "metadata" : [
+                  {"geshi"    : "cpp"      },
+                  {"language" : "CPlusPlus"}
+                ]
+              }
+            },
+            {
+              "filename" : "Languages/Java/.101meta",
+              "rule"     : {
+                "suffix"   : ".java",
+                "metadata" : [
+                  {"geshi"     : "java"                                    },
+                  {"language"  : "Java"                                    },
+                  {"validator" : "technologies/JValidator/validator.py"    },
+                  {"extractor" : "technologies/JFactExtractor/extractor.py"},
+                  {"locator"   : "technologies/JFragmentLocator/locator.py"}
+                ]
+              }
+            },
+            {
               "filename" : "Technologies/Hibernate/.101meta",
               "rule"     : {
                 "args"      : ["org.hibernate"],
@@ -114,17 +148,101 @@ command : make -s test-run101meta-basics.run
                   {"dependsOn" : "Hibernate"}
                 ]
               }
+            }
+          ]
+        }
+
+# Another empty pull to ensure nothing changes that shouldn't.
+4 :
+  branch : run101meta-basics3
+  diff   : {}
+  files  : *fullmatches
+
+# Some modifications to rules and files.
+5 :
+  indiff :
+    101web/data/dumps/rules.json                                              : M
+    101web/data/dumps/matches.json                                            : M
+    101web/data/resources/Contributions/C/main.c.matches.json                 : A
+    101web/data/resources/Contributions/C/Header.h.matches.json               : A
+    101web/data/resources/Contributions/CPlusPlus/main.cpp.matches.json       : ~
+    101web/data/resources/Contributions/CPlusPlus/Header.hpp.matches.json     : ~
+    101web/data/resources/Contributions/Java/Main.java.matches.json           : ~
+    101web/data/resources/Contributions/Java/Hibernate.java.matches.json      : ~
+    101web/data/resources/Contributions/Java/hibernate-1-2-3.jar.matches.json : D
+  files  : &modifiedmatches
+    101web/data/resources/Contributions/Java/hibernate-1-2-3.jar.matches.json :
+      exists : 0
+    101web/data/resources/Contributions/C/main.c.matches.json :
+      json : &cmatches |
+        [
+          {"metadata" : {"geshi"    : "c"}},
+          {"metadata" : {"language" : "C"}}
+        ]
+    101web/data/resources/Contributions/C/Header.h.matches.json :
+      json : *cmatches
+    101web/data/resources/Contributions/CPlusPlus/main.cpp.matches.json :
+      json : *cppmatches
+    101web/data/resources/Contributions/CPlusPlus/Header.hpp.matches.json :
+      json : *cppmatches
+    101web/data/resources/Contributions/Java/Main.java.matches.json :
+      json : *javamatches
+    101web/data/resources/Contributions/Java/Hibernate.java.matches.json :
+      json : *javamatches
+    101web/data/dumps/matches.json :
+      json : |
+        {
+          "failures" : [],
+          "matches"  : {
+            "Contributions/C/Header.h" : [
+              {"metadata" : {"geshi"    : "c"}},
+              {"metadata" : {"language" : "C"}}
+            ],
+            "Contributions/C/main.c"   : [
+              {"metadata" : {"geshi"    : "c"}},
+              {"metadata" : {"language" : "C"}}
+            ],
+            "Contributions/CPlusPlus/Header.hpp" : [
+              {"metadata" : {"geshi"    : "cpp"      }},
+              {"metadata" : {"language" : "CPlusPlus"}}
+            ],
+            "Contributions/CPlusPlus/main.cpp"   : [
+              {"metadata" : {"geshi"    : "cpp"      }},
+              {"metadata" : {"language" : "CPlusPlus"}}
+            ],
+            "Contributions/Java/Hibernate.java"  : [
+              {"metadata" : {"geshi"     : "java"                                    }},
+              {"metadata" : {"language"  : "Java"                                    }},
+              {"metadata" : {"validator" : "technologies/JValidator/validator.py"    }},
+              {"metadata" : {"extractor" : "technologies/JFactExtractor/extractor.py"}},
+              {"metadata" : {"locator"   : "technologies/JFragmentLocator/locator.py"}}
+            ],
+            "Contributions/Java/Main.java"       : [
+              {"metadata" : {"geshi"     : "java"                                    }},
+              {"metadata" : {"language"  : "Java"                                    }},
+              {"metadata" : {"validator" : "technologies/JValidator/validator.py"    }},
+              {"metadata" : {"extractor" : "technologies/JFactExtractor/extractor.py"}},
+              {"metadata" : {"locator"   : "technologies/JFragmentLocator/locator.py"}}
+            ]
+          },
+          "rules"    : [
+            {
+              "filename" : "Languages/C/.101meta",
+              "rule"     : {
+                "suffix"   : ".c",
+                "metadata" : [
+                  {"geshi"    : "c"},
+                  {"language" : "C"}
+                ]
+              }
             },
             {
-              "filename" : "Languages/Java/.101meta",
+              "filename" : "Languages/C/.101meta",
               "rule"     : {
-                "suffix"   : ".java",
+                "suffix"   : ".h",
                 "metadata" : [
-                  {"geshi"     : "java"                                    },
-                  {"language"  : "Java"                                    },
-                  {"validator" : "technologies/JValidator/validator.py"    },
-                  {"extractor" : "technologies/JFactExtractor/extractor.py"},
-                  {"locator"   : "technologies/JFragmentLocator/locator.py"}
+                  {"geshi"    : "c"},
+                  {"language" : "C"}
                 ]
               }
             },
@@ -147,12 +265,19 @@ command : make -s test-run101meta-basics.run
                   {"language" : "CPlusPlus"}
                 ]
               }
+            },
+            {
+              "filename" : "Languages/Java/.101meta",
+              "rule"     : {
+                "suffix"   : ".java",
+                "metadata" : [
+                  {"geshi"     : "java"                                    },
+                  {"language"  : "Java"                                    },
+                  {"validator" : "technologies/JValidator/validator.py"    },
+                  {"extractor" : "technologies/JFactExtractor/extractor.py"},
+                  {"locator"   : "technologies/JFragmentLocator/locator.py"}
+                ]
+              }
             }
           ]
         }
-
-# Another empty pull to ensure nothing changes that shouldn't.
-4 :
-  branch : run101meta-basics3
-  diff   : {}
-  files  : *fullmatches
