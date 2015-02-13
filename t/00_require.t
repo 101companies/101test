@@ -8,6 +8,7 @@ my @modules = qw(
     IPC::Run
     List::MoreUtils
     JSON::Schema
+    Test::Deep
     Test::Most
     YAML
 );

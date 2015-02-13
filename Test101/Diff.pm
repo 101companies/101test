@@ -1,7 +1,7 @@
 package Test101::Diff;
 use strict;
 use warnings;
-use Test::More;
+use Test::Deep;
 use YAML;
 
 use Class::Tiny qw(diff);
@@ -26,7 +26,7 @@ sub test_count { 1 }
 sub test
 {
     my ($self, $args) = @_;
-    is_deeply $args->{diff}, $self->diff, "diff is:\n" . Dump($self->diff);
+    cmp_deeply $args->{diff}, $self->diff, "diff is:\n" . Dump($self->diff);
 }
 
 

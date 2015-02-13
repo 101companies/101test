@@ -19,7 +19,7 @@ info: list
 
 install:
 	cpan install Class::Tiny File::Slurp IPC::Run List::MoreUtils
-	             JSON::Schema Test::Most Try::Tiny YAML
+	             JSON::Schema Test::Deep Test::Most Try::Tiny YAML
 
 
 clean:

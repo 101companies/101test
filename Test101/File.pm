@@ -4,6 +4,7 @@ use warnings;
 use File::Slurp     qw(slurp);
 use JSON            qw(decode_json);
 use List::MoreUtils qw(true);
+use Test::Deep;
 use Test::More;
 use Try::Tiny;
 
@@ -100,7 +101,7 @@ sub test_json
     try
     {
         my $json = decode_json($content) or die $!;
-        is_deeply $json, $self->json, "json of $path is:\n" . $self->json_str;
+        cmp_deeply $json, $self->json, "json of $path is:\n" . $self->json_str;
     }
     catch
     {
