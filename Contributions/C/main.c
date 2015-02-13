@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include "Header.h"
 
-int
-main()
+Number
+main(void)
 {
     puts("Hello World!");
     return 0;
