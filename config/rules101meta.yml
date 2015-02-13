@@ -54,13 +54,46 @@ command : make -s test-rules101meta.run
                 ]
             },
             "results"  : {
-                "suffixes"   : [".java", ".cpp", ".hpp"],
+                "suffixes"   : [".cpp", ".hpp", ".java"],
                 "predicates" : {
                     "technologies/Java_platform/javaImport.py" : [
                         "org.hibernate"
                     ]
                 },
                 "rules"      : [
+                    {
+                        "filename" : "Languages/CPlusPlus/.101meta",
+                        "rule"     : {
+                            "suffix"   : ".cpp",
+                            "metadata" : [
+                                {"geshi"    : "cpp"      },
+                                {"language" : "CPlusPlus"}
+                            ]
+                        }
+                    },
+                    {
+                        "filename" : "Languages/CPlusPlus/.101meta",
+                        "rule"     : {
+                            "suffix"   : ".hpp",
+                            "metadata" : [
+                                {"geshi"    : "cpp"      },
+                                {"language" : "CPlusPlus"}
+                            ]
+                        }
+                    },
+                    {
+                        "filename" : "Languages/Java/.101meta",
+                        "rule"     : {
+                            "suffix"   : ".java",
+                            "metadata" : [
+                                {"geshi"     : "java"                                    },
+                                {"language"  : "Java"                                    },
+                                {"validator" : "technologies/JValidator/validator.py"    },
+                                {"extractor" : "technologies/JFactExtractor/extractor.py"},
+                                {"locator"   : "technologies/JFragmentLocator/locator.py"}
+                            ]
+                        }
+                    },
                     {
                         "filename" : "Technologies/Hibernate/.101meta",
                         "rule"     : {
@@ -79,39 +112,6 @@ command : make -s test-rules101meta.run
                             "basename" : "#^hibernate(.*)[.]jar$#",
                             "metadata" : [
                                 {"dependsOn" : "Hibernate"}
-                            ]
-                        }
-                    },
-                    {
-                        "filename" : "Languages/Java/.101meta",
-                        "rule"     : {
-                            "suffix"   : ".java",
-                            "metadata" : [
-                                {"geshi"     : "java"                                    },
-                                {"language"  : "Java"                                    },
-                                {"validator" : "technologies/JValidator/validator.py"    },
-                                {"extractor" : "technologies/JFactExtractor/extractor.py"},
-                                {"locator"   : "technologies/JFragmentLocator/locator.py"}
-                            ]
-                        }
-                    },
-                    {
-                        "filename" : "Languages/CPlusPlus/.101meta",
-                        "rule"     : {
-                            "suffix"   : ".cpp",
-                            "metadata" : [
-                                {"geshi"    : "cpp"      },
-                                {"language" : "CPlusPlus"}
-                            ]
-                        }
-                    },
-                    {
-                        "filename" : "Languages/CPlusPlus/.101meta",
-                        "rule"     : {
-                            "suffix"   : ".hpp",
-                            "metadata" : [
-                                {"geshi"    : "cpp"      },
-                                {"language" : "CPlusPlus"}
                             ]
                         }
                     }
