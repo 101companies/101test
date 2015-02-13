@@ -1,6 +1,6 @@
-name    : run101meta-basics
+name    : matches101meta
 tests   : 5
-command : make -s test-run101meta-basics.run
+command : make -s test-matches101meta.run
 
 # Empty matches with no rules.
 1 :
@@ -19,7 +19,7 @@ command : make -s test-run101meta-basics.run
 
 # Same thing again to make sure that no superfluous diff is generated.
 2 :
-  branch : run101meta-basics1
+  branch : matches101meta1
   diff   : {}
   files  : *emptymatches
 
@@ -154,7 +154,7 @@ command : make -s test-run101meta-basics.run
 
 # Another empty pull to ensure nothing changes that shouldn't.
 4 :
-  branch : run101meta-basics3
+  branch : matches101meta3
   diff   : {}
   files  : *fullmatches
 
