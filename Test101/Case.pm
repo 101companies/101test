@@ -8,7 +8,7 @@ use Test::More;
 use constant VALIDATORS => qw(diff indiff files);
 require "Test101/\u$_.pm" for VALIDATORS;
 
-use Class::Tiny qw(number command branch validators);
+use Class::Tiny qw(number command branch validators result);
 
 
 sub BUILD
@@ -43,12 +43,21 @@ sub test
     {
         plan tests => $self->test_count;
 
-        my ($exec, $in, $out) = ([split /\s+/, $self->command]);
-        ok run($exec, \$in, \$out), 'command ran ok: ' . $self->command;
+        my ($exec, $in) = ([split /\s+/, $self->command]);
+        ok run($exec, \$in), 'command ran ok: ' . $self->command;
         note "command exited with $?";
 
-        my %diff = map { /^\s*([AMD])\s+(.+?)\s*$/ ? ($2 => $1) : () }
-                       split /\n/, $out;
+        my %diff = do
+        {
+            if (open my $result, '<', $self->result)
+            {   map { chomp; reverse split /\s+/, $_, 2 } <$result> }
+            else
+            {
+                warn "Can't open ${\$self->result}: $!";
+                ()
+            }
+        };
+
         my $args = {
             number => $self->number,
             branch => $self->branch,

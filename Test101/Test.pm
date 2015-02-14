@@ -30,11 +30,12 @@ sub BUILD
     my @cases = map
     {
         Test101::Case->new(
-            branch  => "$base{name}$_",
+            branch => "$base{name}$_",
             %base,
             exists $config->{$_} ? %{$config->{$_}} : (),
-            number  => $_,
+            number => $_,
             output => $self->output,
+            result => "$args->{diffs}/result",
         )
     } 1 .. $config->{tests};
 

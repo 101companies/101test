@@ -23,6 +23,7 @@ for (OPTIONS)
 
 Test101::Test->new(
     %options,
+    diffs  => "$options{output}/101diffs",
     config => LoadFile($options{config}),
     schema => LoadFile($options{schema}),
 )->test;

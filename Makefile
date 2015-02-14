@@ -38,7 +38,7 @@ generated/%.t:
 	echo "     '--schema=config.schema.yml',"       >> $@
 	echo '     "--cd=$$ENV{worker101dir}/modules",' >> $@
 	echo "     '--config=config/$*.yml',"           >> $@
-	echo "     '--output=output/$*'"              >> $@
+	echo "     '--output=output/$*'"                >> $@
 
 
 %.test: worker-dir
