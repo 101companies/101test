@@ -1,4 +1,4 @@
-package Test101::Files;
+package Test101::FilesValidator;
 use strict;
 use warnings;
 use List::Util    qw(reduce);

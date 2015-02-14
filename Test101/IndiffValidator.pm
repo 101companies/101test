@@ -1,11 +1,11 @@
-package Test101::Indiff;
+package Test101::IndiffValidator;
 use strict;
 use warnings;
 use Test::More;
 use YAML;
-use Test101::Diff;
+use Test101::DiffValidator;
 
-use parent qw(Test101::Diff);
+use parent qw(Test101::DiffValidator);
 
 
 sub test_count { scalar keys %{shift->diff} }

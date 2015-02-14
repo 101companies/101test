@@ -1,4 +1,4 @@
-package Test101::Diff;
+package Test101::DiffValidator;
 use strict;
 use warnings;
 use Test::Deep;

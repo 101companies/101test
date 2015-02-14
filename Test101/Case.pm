@@ -2,11 +2,19 @@ package Test101::Case;
 use strict;
 use warnings;
 use IPC::Run   qw(run);
-use List::Util qw(reduce);
+use List::Util qw(pairs reduce);
 use Test::More;
 
-use constant VALIDATORS => qw(diff indiff files);
-require "Test101/\u$_.pm" for VALIDATORS;
+
+our @VALIDATORS;
+for (glob 'Test101/*')
+{
+    if (m{(\w+)Validator\.pm$})
+    {
+        require;
+        push @VALIDATORS, "Test101::$1Validator" => lc $1;
+    }
+}
 
 use Class::Tiny qw(number command branch validators result);
 
@@ -17,11 +25,11 @@ sub BUILD
     my  $tests        = 1;
 
     my @validators;
-    for (VALIDATORS)
+    for (pairs @VALIDATORS)
     {
-        next if not exists $args->{$_};
-        my $class = "Test101::\u$_";
-        push @validators, $class->new(%$args, arg => $args->{$_})
+        my ($class, $attr) = @$_;
+        next if not exists $args->{$attr};
+        push @validators, $class->new(%$args, arg => $args->{$attr})
     }
 
     $self->validators(\@validators);
