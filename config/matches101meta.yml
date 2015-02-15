@@ -13,7 +13,7 @@ command : make -s test-matches101meta.run
       json : |
         {
             "failures" : [],
-            "matches"  : {},
+            "matches"  : [],
             "rules"    : []
         }
 
@@ -67,33 +67,48 @@ command : make -s test-matches101meta.run
       json : |
         {
           "failures" : [],
-          "matches"  : {
-            "Contributions/CPlusPlus/Header.hpp" : [
-              {"metadata" : {"geshi"    : "cpp"      }},
-              {"metadata" : {"language" : "CPlusPlus"}}
-            ],
-            "Contributions/CPlusPlus/main.cpp"   : [
-              {"metadata" : {"geshi"    : "cpp"      }},
-              {"metadata" : {"language" : "CPlusPlus"}}
-            ],
-            "Contributions/Java/Hibernate.java"  : [
-              {"metadata" : {"geshi"     : "java"                                    }},
-              {"metadata" : {"language"  : "Java"                                    }},
-              {"metadata" : {"validator" : "technologies/JValidator/validator.py"    }},
-              {"metadata" : {"extractor" : "technologies/JFactExtractor/extractor.py"}},
-              {"metadata" : {"locator"   : "technologies/JFragmentLocator/locator.py"}}
-            ],
-            "Contributions/Java/Main.java"       : [
-              {"metadata" : {"geshi"     : "java"                                    }},
-              {"metadata" : {"language"  : "Java"                                    }},
-              {"metadata" : {"validator" : "technologies/JValidator/validator.py"    }},
-              {"metadata" : {"extractor" : "technologies/JFactExtractor/extractor.py"}},
-              {"metadata" : {"locator"   : "technologies/JFragmentLocator/locator.py"}}
-            ],
-            "Contributions/Java/hibernate-1-2-3.jar" : [
-              {"metadata" : {"dependsOn" : "Hibernate"}}
-            ]
-          },
+          "matches"  : [
+            {
+              "filename" : "Contributions/CPlusPlus/Header.hpp",
+              "units"    : [
+                {"metadata" : {"geshi"    : "cpp"      }},
+                {"metadata" : {"language" : "CPlusPlus"}}
+              ]
+            },
+            {
+              "filename" : "Contributions/CPlusPlus/main.cpp",
+              "units"    : [
+                {"metadata" : {"geshi"    : "cpp"      }},
+                {"metadata" : {"language" : "CPlusPlus"}}
+              ]
+            },
+            {
+              "filename" : "Contributions/Java/Hibernate.java",
+              "units"    : [
+                {"metadata" : {"geshi"     : "java"                                    }},
+                {"metadata" : {"language"  : "Java"                                    }},
+                {"metadata" : {"validator" : "technologies/JValidator/validator.py"    }},
+                {"metadata" : {"extractor" : "technologies/JFactExtractor/extractor.py"}},
+                {"metadata" : {"locator"   : "technologies/JFragmentLocator/locator.py"}}
+              ]
+            },
+            {
+              "filename" : "Contributions/Java/Main.java",
+              "units"    : [
+                {"metadata" : {"geshi"     : "java"                                    }},
+                {"metadata" : {"language"  : "Java"                                    }},
+                {"metadata" : {"validator" : "technologies/JValidator/validator.py"    }},
+                {"metadata" : {"extractor" : "technologies/JFactExtractor/extractor.py"}},
+                {"metadata" : {"locator"   : "technologies/JFragmentLocator/locator.py"}}
+              ]
+            },
+            {
+              "filename" : "Contributions/Java/hibernate-1-2-3.jar",
+              "units"    : [
+                {"metadata" : {"dependsOn" : "Hibernate"}}
+              ]
+            }
+          ],
           "rules"    : [
             {
               "filename" : "Languages/CPlusPlus/.101meta",
@@ -193,38 +208,56 @@ command : make -s test-matches101meta.run
       json : |
         {
           "failures" : [],
-          "matches"  : {
-            "Contributions/C/Header.h" : [
-              {"metadata" : {"geshi"    : "c"}},
-              {"metadata" : {"language" : "C"}}
-            ],
-            "Contributions/C/main.c"   : [
-              {"metadata" : {"geshi"    : "c"}},
-              {"metadata" : {"language" : "C"}}
-            ],
-            "Contributions/CPlusPlus/Header.hpp" : [
-              {"metadata" : {"geshi"    : "cpp"      }},
-              {"metadata" : {"language" : "CPlusPlus"}}
-            ],
-            "Contributions/CPlusPlus/main.cpp"   : [
-              {"metadata" : {"geshi"    : "cpp"      }},
-              {"metadata" : {"language" : "CPlusPlus"}}
-            ],
-            "Contributions/Java/Hibernate.java"  : [
-              {"metadata" : {"geshi"     : "java"                                    }},
-              {"metadata" : {"language"  : "Java"                                    }},
-              {"metadata" : {"validator" : "technologies/JValidator/validator.py"    }},
-              {"metadata" : {"extractor" : "technologies/JFactExtractor/extractor.py"}},
-              {"metadata" : {"locator"   : "technologies/JFragmentLocator/locator.py"}}
-            ],
-            "Contributions/Java/Main.java"       : [
-              {"metadata" : {"geshi"     : "java"                                    }},
-              {"metadata" : {"language"  : "Java"                                    }},
-              {"metadata" : {"validator" : "technologies/JValidator/validator.py"    }},
-              {"metadata" : {"extractor" : "technologies/JFactExtractor/extractor.py"}},
-              {"metadata" : {"locator"   : "technologies/JFragmentLocator/locator.py"}}
-            ]
-          },
+          "matches"  : [
+            {
+              "filename" : "Contributions/C/Header.h",
+              "units"    : [
+                {"metadata" : {"geshi"    : "c"}},
+                {"metadata" : {"language" : "C"}}
+              ]
+            },
+            {
+              "filename" : "Contributions/C/main.c",
+              "units"    : [
+                {"metadata" : {"geshi"    : "c"}},
+                {"metadata" : {"language" : "C"}}
+              ]
+            },
+            {
+              "filename" : "Contributions/CPlusPlus/Header.hpp",
+              "units"    : [
+                {"metadata" : {"geshi"    : "cpp"      }},
+                {"metadata" : {"language" : "CPlusPlus"}}
+              ]
+            },
+            {
+              "filename" : "Contributions/CPlusPlus/main.cpp",
+              "units"    : [
+                {"metadata" : {"geshi"    : "cpp"      }},
+                {"metadata" : {"language" : "CPlusPlus"}}
+              ]
+            },
+            {
+              "filename" : "Contributions/Java/Hibernate.java",
+              "units"    : [
+                {"metadata" : {"geshi"     : "java"                                    }},
+                {"metadata" : {"language"  : "Java"                                    }},
+                {"metadata" : {"validator" : "technologies/JValidator/validator.py"    }},
+                {"metadata" : {"extractor" : "technologies/JFactExtractor/extractor.py"}},
+                {"metadata" : {"locator"   : "technologies/JFragmentLocator/locator.py"}}
+              ]
+            },
+            {
+              "filename" : "Contributions/Java/Main.java",
+              "units"    : [
+                {"metadata" : {"geshi"     : "java"                                    }},
+                {"metadata" : {"language"  : "Java"                                    }},
+                {"metadata" : {"validator" : "technologies/JValidator/validator.py"    }},
+                {"metadata" : {"extractor" : "technologies/JFactExtractor/extractor.py"}},
+                {"metadata" : {"locator"   : "technologies/JFragmentLocator/locator.py"}}
+              ]
+            }
+          ],
           "rules"    : [
             {
               "filename" : "Languages/C/.101meta",
