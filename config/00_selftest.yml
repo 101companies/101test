@@ -1,6 +1,6 @@
 name    : test
 tests   : 3
-command : make -s test-test.run
+command : make -s test-test.debug
 
 1 :
   diff  :

@@ -1,6 +1,6 @@
 name    : rules101meta
 tests   : 6
-command : make -s test-rules101meta.run
+command : make -s test-rules101meta.debug
 
 # Just an empty repo with no rules
 1 :

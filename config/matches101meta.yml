@@ -1,6 +1,6 @@
 name    : matches101meta
 tests   : 5
-command : make -s test-matches101meta.run
+command : make -s test-matches101meta.debug
 
 # Empty matches with no rules.
 1 :

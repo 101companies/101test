@@ -33,12 +33,12 @@ list:
 
 generated/%.t:
 	mkdir -p generated
-	echo "exec 'perl',"                              > $@
-	echo "     'tester',"                           >> $@
-	echo "     '--schema=config.schema.yml',"       >> $@
-	echo '     "--cd=$$ENV{worker101dir}/modules",' >> $@
-	echo "     '--config=config/$*.yml',"           >> $@
-	echo "     '--output=output/$*'"                >> $@
+	echo "exec 'perl',"                        > $@
+	echo "     'tester',"                     >> $@
+	echo "     '--schema=config.schema.yml'," >> $@
+	echo '     "--cd=$$ENV{worker101dir}",'   >> $@
+	echo "     '--config=config/$*.yml',"     >> $@
+	echo "     '--output=output/$*'"          >> $@
 
 
 %.test: worker-dir
