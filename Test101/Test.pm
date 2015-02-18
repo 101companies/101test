@@ -35,7 +35,7 @@ sub BUILD
             exists $config->{$_} ? %{$config->{$_}} : (),
             number => $_,
             output => $self->output,
-            result => "$args->{diffs}/result",
+            result => "$args->{diffs}/result.diff",
         )
     } 1 .. $config->{tests};
 
