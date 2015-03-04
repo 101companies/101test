@@ -7,6 +7,7 @@ echo 'Use "export worker101dir=/path/to/101worker" to set the path.';
 info: list
 	@echo 'You can use "make TESTNAME.test" to run the test'
 	@echo 'called TESTNAME and "make all" to run all tests.'
+	@echo 'You can also use "make parallel" to run all tests in parallel".
 	@echo 'For verbose output, you can set the environment variable'
 	@echo 'PROVE_ARGS to -v, meaning you run make as follows:'
 	@echo '    PROVE_ARGS=-v make TARGET'
@@ -28,7 +29,7 @@ clean:
 
 list:
 	@echo 'The following tests are available:'
-	@ls config | sort | sed 's/\.yml$$//' | sed 's/^/    - /'
+	@ls -1 config | sort | sed 's/\.yml$$//' | sed 's/^/    - /'
 
 
 generated/%.t:
@@ -48,9 +49,13 @@ generated/%.t:
 
 
 all: worker-dir
-	make -s `ls config | sort | sed 's/^/generated\//' | sed 's/\.yml$$/.t/'`
+	make -s `ls -1 config | sort | sed 's/^/generated\//' | sed 's/\.yml$$/.t/'`
 	rm -rf output
 	prove $(PROVE_ARGS) generated
+
+
+parallel:
+	jobs=`ls -1 config | wc -l`; PROVE_ARGS="$$PROVE_ARGS -j $$jobs" make -s all
 
 
 worker-dir:
