@@ -42,8 +42,9 @@ sub BUILD
     my @useless = grep { $_ < 1 || $_ > $config->{tests} } @numbers;
     if (@useless)
     {
-        warn "Useless test case(s): ", join ', ', sort { $a <=> $b } @useless;
-        warn "Test case numbers are between 1 and $config->{tests}.";
+        my $joined = join ', ', sort { $a <=> $b } @useless;
+        warn "Useless test case(s): $joined\n",
+             "Test case numbers are between 1 and $config->{tests}.\n";
     }
 
     $self->cases(\@cases);
