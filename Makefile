@@ -7,7 +7,9 @@ echo 'Use "export worker101dir=/path/to/101worker" to set the path.';
 info: list
 	@echo 'You can use "make TESTNAME.test" to run the test'
 	@echo 'called TESTNAME and "make all" to run all tests.'
-	@echo 'You can also use "make parallel" to run all tests in parallel".
+	@echo
+	@echo 'You can also use "make parallel" to run all tests in parallel.'
+	@echo
 	@echo 'For verbose output, you can set the environment variable'
 	@echo 'PROVE_ARGS to -v, meaning you run make as follows:'
 	@echo '    PROVE_ARGS=-v make TARGET'
@@ -16,6 +18,7 @@ info: list
 	    echo; \
 	    $(WORKER_ENV_WARNING) \
 	fi
+	@echo
 
 
 install:
@@ -28,8 +31,10 @@ clean:
 
 
 list:
+	@echo
 	@echo 'The following tests are available:'
 	@ls -1 config | sort | sed 's/\.yml$$//' | sed 's/^/    - /'
+	@echo
 
 
 generated/%.t:
