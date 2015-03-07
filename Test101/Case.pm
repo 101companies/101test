@@ -9,7 +9,7 @@ use Test::More;
 our @VALIDATORS;
 for (glob 'Test101/*')
 {
-    if (m{(\w+)Validator\.pm$})
+    if (/(\w+)Validator\.pm$/)
     {
         require;
         push @VALIDATORS, "Test101::$1Validator" => lc $1;
