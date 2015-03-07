@@ -21,7 +21,7 @@ sub BUILD
         my $path = $self->path;
         for (FILE_TESTS)
         {
-            die "Can't check $_ on $path when the file isn't supposed to exist"
+            die "Can't check $_ on $path when file isn't supposed to exist\n"
                 if defined $self->$_;
         }
     }
@@ -40,8 +40,9 @@ sub BUILD
             {   $self->json(decode_json($self->json)) }
             catch
             {
-                die "JSON decode error $_\nIn case #$args->{number} "
-                  . "with this JSON:\n" . $self->json
+                die "JSON decode error $_",
+                    "In case #$args->{number} with this JSON:\n",
+                    $self->json, "\n"
             };
         }
     }
@@ -107,9 +108,7 @@ sub test_json
         cmp_deeply $json, $self->json, "json of $path is:\n" . $self->json_str;
     }
     catch
-    {
-        fail "$path has invalid json ($_):\n$content";
-    };
+    {   fail "$path has invalid json ($_):\n$content" };
 }
 
 

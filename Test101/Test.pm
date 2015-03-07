@@ -15,7 +15,8 @@ sub BUILD
     my  $config       = $self->config;
 
     my $valid = JSON::Schema->new($self->schema)->validate($config);
-    die join "\n - ", 'Invalid test definition:', $valid->errors if not $valid;
+    if (!$valid)
+    {   die join("\n - ", 'Invalid test definition:', $valid->errors), "\n" }
 
     my (@strings, @numbers);
     for (keys %$config)
@@ -55,7 +56,7 @@ sub test
 {
     my ($self) = @_;
 
-    chdir $self->cd or die "Couldn't cd into ${\$self->cd}: $!";
+    chdir $self->cd or die "Couldn't cd into ${\$self->cd}: $!\n";
     $ENV{output101dir} = $self->output;
 
     plan tests => scalar @{$self->cases};
