@@ -13,12 +13,12 @@ use constant OPTIONS => qw(config schema cd output);
 my %options;
 GetOptions(\%options, map { "$_=s" } OPTIONS);
 
-for (OPTIONS)
-{
-    die "Missing required option: $_\n" if not defined $options{$_};
-    make_path($options{$_})             if not -e      $options{$_};
-    $options{$_} = abs_path $options{$_} or die "Invalid path: $_ ($!)\n";
-}
+
+defined $options{$_} or die "Missing required option: $_\n" for OPTIONS;
+
+make_path($options{output}) if not -e $options{output};
+
+$options{$_} = abs_path $options{$_} or die "Invalid path $_: $!\n" for OPTIONS;
 
 
 Test101::Test->new(
